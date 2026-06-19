@@ -1,0 +1,69 @@
+-- FitCore Ultra Data Model Enhancement Migrations
+-- Date: 2026-03-17
+
+-- 1. Trainee Profiles
+ALTER TABLE trainee_profiles 
+ADD COLUMN IF NOT EXISTS date_of_birth DATE,
+ADD COLUMN IF NOT EXISTS gender VARCHAR(20),
+ADD COLUMN IF NOT EXISTS blood_group VARCHAR(10),
+ADD COLUMN IF NOT EXISTS emergency_contact_name VARCHAR(100),
+ADD COLUMN IF NOT EXISTS emergency_contact_phone VARCHAR(20),
+ADD COLUMN IF NOT EXISTS medical_conditions TEXT,
+ADD COLUMN IF NOT EXISTS fitness_goal VARCHAR(30),
+ADD COLUMN IF NOT EXISTS referral_source VARCHAR(100),
+ADD COLUMN IF NOT EXISTS qr_code_id VARCHAR(100) UNIQUE;
+
+-- 2. Coach Profiles
+ALTER TABLE coach_profiles
+ADD COLUMN IF NOT EXISTS certification_name VARCHAR(100),
+ADD COLUMN IF NOT EXISTS certification_expiry_date DATE,
+ADD COLUMN IF NOT EXISTS average_rating DOUBLE PRECISION,
+ADD COLUMN IF NOT EXISTS max_trainee_capacity INTEGER,
+ADD COLUMN IF NOT EXISTS languages_spoken VARCHAR(200),
+ADD COLUMN IF NOT EXISTS bio TEXT,
+ADD COLUMN IF NOT EXISTS salary_type VARCHAR(30);
+
+-- 3. Sessions
+ALTER TABLE sessions
+ADD COLUMN IF NOT EXISTS actual_start_time TIME,
+ADD COLUMN IF NOT EXISTS actual_end_time TIME,
+ADD COLUMN IF NOT EXISTS session_location VARCHAR(200),
+ADD COLUMN IF NOT EXISTS session_notes TEXT,
+ADD COLUMN IF NOT EXISTS trainee_rating INTEGER,
+ADD COLUMN IF NOT EXISTS estimated_calories_burned INTEGER,
+ADD COLUMN IF NOT EXISTS recording_url VARCHAR(255);
+
+-- 4. Membership Plans
+ALTER TABLE membership_plans
+ADD COLUMN IF NOT EXISTS category VARCHAR(30),
+ADD COLUMN IF NOT EXISTS validity_days INTEGER,
+ADD COLUMN IF NOT EXISTS max_consultations INTEGER,
+ADD COLUMN IF NOT EXISTS is_personal_training_included BOOLEAN DEFAULT FALSE,
+ADD COLUMN IF NOT EXISTS access_level VARCHAR(50);
+
+-- 5. Payments
+ALTER TABLE payments
+ADD COLUMN IF NOT EXISTS tax_amount NUMERIC(10,2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS discount_amount NUMERIC(10,2) DEFAULT 0,
+ADD COLUMN IF NOT EXISTS total_amount NUMERIC(10,2),
+ADD COLUMN IF NOT EXISTS billing_address VARCHAR(255),
+ADD COLUMN IF NOT EXISTS is_invoice_generated BOOLEAN DEFAULT FALSE,
+ADD COLUMN IF NOT EXISTS payment_gateway VARCHAR(50);
+
+-- 6. Machines
+ALTER TABLE machines
+ADD COLUMN IF NOT EXISTS purchase_date DATE,
+ADD COLUMN IF NOT EXISTS warranty_expiry_date DATE,
+ADD COLUMN IF NOT EXISTS last_maintenance_date DATE,
+ADD COLUMN IF NOT EXISTS next_maintenance_date DATE,
+ADD COLUMN IF NOT EXISTS condition_status VARCHAR(30),
+ADD COLUMN IF NOT EXISTS serial_number VARCHAR(100) UNIQUE,
+ADD COLUMN IF NOT EXISTS location_in_gym VARCHAR(100);
+
+-- 7. Attendance
+ALTER TABLE attendance
+ADD COLUMN IF NOT EXISTS check_in_time TIMESTAMP,
+ADD COLUMN IF NOT EXISTS check_out_time TIMESTAMP,
+ADD COLUMN IF NOT EXISTS check_in_method VARCHAR(30),
+ADD COLUMN IF NOT EXISTS temperature_reading DOUBLE PRECISION,
+ADD COLUMN IF NOT EXISTS is_mask_worn BOOLEAN DEFAULT FALSE;
